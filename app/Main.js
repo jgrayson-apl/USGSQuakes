@@ -880,17 +880,19 @@ define([
         sketchViewModel.create("rectangle");
       });
 
-      sketchViewModel.on("create-cancel", (evt) => {
-        domClass.remove(sketch_aoi_btn, "btn-disabled");
-      });
-
       sketchViewModel.on("create", (evt) => {
-        this.emit("aoi-changed", { aoi: evt.geometry });
-      });
-
-      sketchViewModel.on("create-complete", (evt) => {
-        domClass.remove(sketch_aoi_btn, "btn-disabled");
-        aoi_graphic.geometry = evt.geometry;
+        switch (evt.state) {
+          case "start":
+            this.emit("aoi-changed", { aoi: evt.graphic.geometry });
+            break;
+            case "complete":
+            domClass.remove(sketch_aoi_btn, "btn-disabled");
+            aoi_graphic.geometry =  evt.graphic.geometry;
+            break;
+          case "cancel":
+            domClass.remove(sketch_aoi_btn, "btn-disabled");
+            break;
+        }
       });
 
       aoi_graphic.watch("geometry", polygon => {
