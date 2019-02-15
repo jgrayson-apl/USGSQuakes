@@ -1,0 +1,27 @@
+{
+  "title": "USGS Monthly Earthquakes",
+  "appid": "",
+  "group": "",
+  "webmap": "c875eb98331a49aab29acb866d90c80b",
+  "webscene": "",
+  "portalUrl": "https://www.arcgis.com",
+  "oauthappid": "hrFP8yDGOiGFx4ub",
+  "proxyUrl": "https://maps.esri.com/proxy/DotNet/proxy.ashx",
+  "units": "dual",
+  "helperServices": {
+    "geometry": {
+      "url": null
+    },
+    "printTask": {
+      "url": null
+    },
+    "elevationSync": {
+      "url": null
+    },
+    "geocode": [
+      {
+        "url": null
+      }
+    ]
+  }
+}

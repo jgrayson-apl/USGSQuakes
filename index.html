@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- End Responsive -->
+    <link rel=icon href="./assets/favicon.ico" sizes="32x32" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.4/css/calcite-web.min.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <script src="./app/dojo.js"></script>
+    <script src="https://js.arcgis.com/4.10/"></script>
+    <script>require(["Application/init"]);</script>
+  </head>
+  <body class="configurable-application--loading">
+    <div id="view-container" class="configurable-application__view-container"></div>
+  </body>
+
+  <div id="title-panel" class="panel panel-dark-blue">
+    <div id="title-label" class="font-size-3"></div>
+    <div>
+      <span>All USGS earthquakes for the last month.</span>
+      <span id="download-data" class="icon-ui-download esri-interactive right" title="Download earthquakes csv from USGS..."></span>
+    </div>
+  </div>
+
+  <div class="panel panel-dark-blue panel-no-padding hide">
+
+    <div id="time-panel" class="panel panel-dark-blue">
+      <div id="play-buttons" class="panel panel-dark-blue panel-no-border">
+        <button id="prev-btn" class="btn-link icon-ui-left icon-ui-flush font-size-4" title="Previous"></button>
+        <button id="play-pause-btn" class="btn-link icon-ui-play icon-ui-flush font-size-5 padding-leader-0" title="Play / Pause"></button>
+        <button id="next-btn" class="btn-link icon-ui-right icon-ui-flush font-size-4" title="Next"></button>
+      </div>
+      <div id="time-node" class="panel panel-dark-blue panel-no-border">
+        <input id="time-input" type="range" value="0">
+        <div id="current-time-node" class="text-center font-size-0 avenir-demi">Time</div>
+      </div>
+      <div id="fps-node" class="panel panel-dark-blue panel-no-border">
+        <input id="fps-input" type="range" min="1" max="60" value="30">
+        <div id="fps-label" class="font-size--3">slower faster</div>
+      </div>
+    </div>
+        
+  </div>
+
+  <div id="counts-panel" class="panel panel-no-padding panel-no-border hide">
+    <div class="panel panel-dark-blue">
+      <div>All Earthquakes</div>
+      <div id="counts-total-label" class="text-right font-size-7">-</div>
+      <div class="text-right avenir-italic font-size--3">one month</div>
+      <div id="counts-recent-label" class="text-right font-size-7">-</div>
+      <div class="text-right avenir-italic font-size--3">&plusmn;12 hours</div>
+    </div>
+    <div class="panel panel-dark-blue">
+      <div>Map Extent</div>
+      <div id="counts-extent-label" class="text-right font-size-7">-</div>
+      <div class="text-right  avenir-italic font-size--3">one month</div>
+      <div id="counts-extent-recent-label" class="text-right font-size-7">-</div>
+      <div class="text-right avenir-italic font-size--3">&plusmn;12 hours</div>
+    </div>
+    <div class="panel panel-dark-blue">
+      <div class="clearfix">
+        <span>Area of Interest</span>
+        <button id="sketch-aoi-btn" class="btn esri-icon-sketch-rectangle right" title="Sketch Area of Interest..."></button>
+      </div>
+      <div id="counts-aoi-label" class="text-right font-size-7">-</div>
+      <div class="text-right avenir-italic font-size--3">one month</div>
+      <div id="counts-aoi-recent-label" class="text-right font-size-7">-</div>
+      <div class="text-right avenir-italic font-size--3">&plusmn;12 hours</div>
+    </div>
+  </div>
+
+  <div id="stats-panel" class="panel panel-no-padding panel-no-border hide">
+    <div class="panel panel-dark-blue">
+      <div>Magnitude</div>
+      <div class="margin-left-half">
+        <div class="font-size-1">
+          <span>Min</span>
+          <span id="mag-min-label" class="right avenir-demi"></span>
+        </div>
+        <div class="font-size-1">
+          <span>Avg</span>
+          <span id="mag-avg-label" class="right avenir-demi"></span>
+        </div>
+        <div class="font-size-1">
+          <span>Max</span>
+          <span id="mag-max-label" class="right avenir-demi"></span>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-dark-blue">
+      <div>Depths (kms)</div>
+      <div class="margin-left-half">
+        <div class="font-size-1">
+          <span>Min</span>
+          <span id="depth-min-label" class="right avenir-demi"></span>
+        </div>
+        <div class="font-size-1">
+          <span>Avg</span>
+          <span id="depth-avg-label" class="right avenir-demi"></span>
+        </div>
+        <div class="font-size-1">
+          <span>Max</span>
+          <span id="depth-max-label" class="right avenir-demi"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="renderer-panel" class="panel hide">
+    <div class="js-tab-group">
+      <nav class="tab-nav">
+        <a class="tab-title js-tab">Firefly</a>
+        <a class="tab-title js-tab is-active">Heatmap</a>
+      </nav>
+      <section class="tab-contents">
+        <article class="tab-section js-tab-section">
+          <div class="panel options-panel">
+
+            <label>
+              <span>Data</span>
+              <div id="firefly-data-slider" class="margin-left-1"></div>
+            </label>
+
+            <label>
+              <span>Size</span>
+              <div id="firefly-size-slider" class="margin-left-1"></div>
+            </label>
+
+          </div>
+        </article>
+        <article class="tab-section js-tab-section is-active">
+          <div class="panel options-panel">
+
+            <label>
+              <span>Blur Radius</span>
+              <div id="heatmap-blur-slider" class="margin-left-1"></div>
+            </label>
+
+            <label>
+              <span>Pixel Intensity</span>
+              <div id="heatmap-intensity-slider" class="margin-left-1"></div>
+            </label>
+
+            <label>
+              <span>Color Stops</span>
+              <div id="heatmap-color-stops-slider" class="margin-left-1"></div>
+            </label>
+
+
+          </div>
+        </article>
+      </section>
+    </div>
+  </div>
+
+</html>

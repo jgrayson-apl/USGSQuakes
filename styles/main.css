@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css?family=Orbitron');
+
+html,
+body {
+  margin      : 0;
+  padding     : 0;
+  width       : 100%;
+  height      : 100%;
+  overflow    : hidden;
+  font-family : Orbitron, Avenir Next, Helvetica Nue, sans-serif;
+}
+
+.configurable-application--loading {
+  text-align : center;
+  display    : block;
+  height     : 100%;
+  width      : 100%;
+  overflow   : hidden;
+  background : #fff url(../assets/loader-ie9.gif) no-repeat center center;
+}
+
+.configurable-application__view-container {
+  padding            : 0;
+  margin             : 0;
+  width              : 100%;
+  height             : 100%;
+  display            : -webkit-box;
+  display            : -ms-flexbox;
+  display            : flex;
+  -webkit-box-pack   : center;
+  -ms-flex-pack      : center;
+  justify-content    : center;
+  -webkit-box-align  : center;
+  -ms-flex-align     : center;
+  align-items        : center;
+  -ms-flex-line-pack : center;
+  align-content      : center
+}
+
+.configurable-application__view-container .esri-view,
+.configurable-application__view-container .esri-view-root {
+  width  : 100%;
+  height : 100%;
+}
+
+.options-panel {
+  min-width  : 250px;
+  min-height : 250px;
+}
+
+.noUi-horizontal {
+  height : 12px;
+}
+
+.noUi-horizontal * {
+  outline : none;
+}
+
+.noUi-connect {
+  background : #043151;
+}
+
+.noUi-horizontal .noUi-handle {
+  cursor        : pointer;
+  width         : 24px;
+  height        : 24px;
+  border-radius : 12px;
+  background    : #f8f8f8;
+}
+
+.noUi-handle:after,
+.noUi-handle:before {
+  content    : "";
+  display    : block;
+  position   : absolute;
+  height     : 14px;
+  width      : 1px;
+  background : transparent;
+  left       : 14px;
+  top        : 6px;
+}
+
+#time-panel {
+  display        : flex;
+  flex-direction : row;
+}
+
+#play-buttons {
+  order       : 0;
+  flex-grow   : 0;
+  flex-shrink : 0;
+}
+
+#time-node {
+  order       : 1;
+  flex-grow   : 5;
+  flex-shrink : 1;
+}
+
+#time-input {
+  width : 300px;
+}
+
+#fps-node {
+  order       : 2;
+  flex-grow   : 0;
+  flex-shrink : 0;
+}
+
+#fps-label {
+  width        : 100%;
+  word-spacing : 4em;
+}
+
+.esri-widget,
+.esri-widget--button,
+.esri-menu,
+.esri-popup__main-container,
+.esri-popup .esri-pointer-direction,
+.esri-button {
+  font-family      : Orbitron, Avenir Next, sans-serif !important;
+  background-color : #004575 !important;
+  color            : #fff !important;
+}
+
+.esri-input,
+.esri-popup__button,
+.esri-widget__table,
+.esri-widget__header,
+.esri-basemap-gallery__item-title {
+  color : unset !important;
+}
+
+.esri-widget--button:focus,
+.esri-widget--button:hover,
+.esri-menu li:focus,
+.esri-menu li:hover {
+  background-color : #699 !important;
+  color            : #fff !important;
+}
+
+.esri-button:focus,
+.esri-button:hover {
+  color : #fff !important;
+}
+
+.esri-layer-list__item {
+  background-color : unset !important;
+}
+
+.selected {
+  color      : #0079c1 !important;
+  background : #fff !important;
+}
+
+.zoom-view-node {
+  position     : absolute;
+  width        : 150px !important;
+  height       : 150px !important;
+  border-color : #0079c1;
+  box-shadow   : 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+#stats-panel {
+  display        : flex;
+  flex-direction : row;
+}
+
+#counts-panel {
+  display        : flex;
+  flex-direction : column;
+}
+
+#stats-panel > .panel,
+#counts-panel > .panel {
+  min-width : 200px
+}
+
+
+#play-buttons button {
+  color       : #fff !important;
+  text-shadow : 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
